@@ -14,10 +14,7 @@ import numpy
 
 
 
-'''
-#memory = Memory(get_data_home())
-#@memory.cache()
-'''
+
 
 def foo(var):
     return {
@@ -35,6 +32,9 @@ def foo(var):
 
 
 
+memory = Memory(get_data_home())
+
+@memory.cache()
 def load_data(file):
     train = numpy.loadtxt(open(file, "rb"), delimiter=",", skiprows=0)
 
@@ -72,12 +72,20 @@ def load_data(file):
 
 if __name__=="__main__":
 
-    #x,y = load_data("../data/poker-hand-training-true.data")
-    x,y = load_data("../data/poker-hand-testing.data")
+    print("load train data")
+    x,y = load_data("../data/poker-hand-training-true.data")
+    print("load train data ok")
 
-
-    mlp = MLPClassifier(hidden_layer_sizes=(104,44), max_iter=10000, alpha=1e-4,
-                        solver='lbfgs', verbose=10, tol=1e-4, random_state=1,
+    #http://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
+    mlp = MLPClassifier(hidden_layer_sizes=(208,156,52),
+                        activation='tanh',
+                        solver='lbfgs',
+                        max_iter=10000,
+                        shuffle=True,
+                        alpha=1e-4,
+                        verbose=10,
+                        tol=1e-4,
+                        random_state=1,
                         learning_rate_init=.1)
     mlp.fit(x, y)
     print("Training set score: %f" % mlp.score(x, y))
@@ -90,7 +98,10 @@ if __name__=="__main__":
     #找个小的测试集合测试一下模型
     prex,prey = load_data("../data/random-testing.data")
 
+    print("test x")
     print(prex)
     rr = mlp.predict(prex)
+    print("test y")
     print(prey)
+    print("predict y")
     print(rr)
