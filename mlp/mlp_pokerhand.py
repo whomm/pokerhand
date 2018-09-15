@@ -32,9 +32,9 @@ def foo(var):
 
 
 
-memory = Memory(get_data_home())
+#memory = Memory(get_data_home())
 
-@memory.cache()
+#@memory.cache()
 def load_data(file):
     train = numpy.loadtxt(open(file, "rb"), delimiter=",", skiprows=0)
 
@@ -77,7 +77,7 @@ if __name__=="__main__":
     print("load train data ok")
 
     #http://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
-    mlp = MLPClassifier(hidden_layer_sizes=(208,156,52),
+    mlp = MLPClassifier(hidden_layer_sizes=(260,156,52),
                         activation='tanh',
                         solver='lbfgs',
                         max_iter=10000,
